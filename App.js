@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { Text, View, TouchableOpacity } from "react-native";
-import { style } from "./css/Styles";
+import { Style } from "./css/Styles";
 import { AntDesign } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -32,5 +32,24 @@ export default function App() {
   );
 }
 function TelaInicial({ navigation }) {
-  return;
+  return (
+    <View style={Style.container}>
+      <Image source={{}} style={Style.logo}/>
+      <View style={Style.btnApp}>
+        <TouchableOpacity
+        style={Style.btn}
+        onPress={()=>navigation.navigate("Login")}>
+          <AntDesign name="login" size={30} color="black"/>
+          <Text>Login</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+          style={Style.btn}
+          onPress={()=>navigation.navigate("Cadastro")}>
+            <AntDesign name="adduser" size={30} color="black"/>
+            <Text>Cadastro</Text>
+            </TouchableOpacity>
+      </View>
+      <StatusBar style="auto"/>
+    </View>
+  )
 }
