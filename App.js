@@ -1,9 +1,9 @@
 import React from "react";
-import { Text, View, Image, TouchableOpacity, Touchable } from "react-native";
+import { Text, View, Image, TouchableOpacity } from "react-native";
 import { styleFormat } from "./css/Styles";
 import { createStackNavigator } from "@react-navigation/stack";
 import Home from "./screens/Home";
-import Cadastro from "./screens/Cadastro";
+import Cadastrar from "./screens/Cadastrar";
 import { NavigationContainer } from "@react-navigation/native";
 import { TextInput } from "react-native-gesture-handler";
 import { AntDesign } from "@expo/vector-icons";
@@ -21,11 +21,11 @@ export default function App() {
           component={TelaInicial}
           options={{ headerShown: false }}
         />
-        <pilha.Screen
-          name="Cadastro"
-          component={Cadastro}
+      <pilha.Screen
+          name="Cadastrar"
+          component={Cadastrar}
           options={{ headerTitleAlign: "center" }}
-        />
+        /> 
         <pilha.Screen
           name="Home"
           component={Home}
@@ -40,7 +40,7 @@ function TelaInicial({ navigation }) {
   const [senha, setSenha] = React.useState("");
   return (
     <View style={styleFormat.container}>
-      <Image source={{}} style={styleFormat.logo} />
+      <Image source={require("./assets/OnLatter.png")} style={styleFormat.logo} />
       <View style={styleFormat.cxinput}>
         <TextInput
           style={styleFormat.input}
@@ -50,6 +50,7 @@ function TelaInicial({ navigation }) {
           value={usuario}
           keyboardType="email-address"
           onChangeText={() => setUsuario(value)}
+          color="black"
         />
         <TextInput
           style={styleFormat.input}
@@ -60,12 +61,13 @@ function TelaInicial({ navigation }) {
           keyboardType="default"
           secureTextEntry
           onChangeText={(value) => setSenha(value)}
+          color="black"
         />
         <View style={{ flexDirection: "row" }}>
           <Text style={{ fontSize: 13, color: "silver" }}>
             Se não possui cadastro clique em
           </Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={()=>navigation.navigate("Cadastrar")}>
             <Text style={{ color: "white", marginLeft: 5 }}>Cadastrar</Text>
           </TouchableOpacity>
         </View>
@@ -74,7 +76,7 @@ function TelaInicial({ navigation }) {
           onPress={() => navigation.navigate("Login")}
         >
           <AntDesign name="login" size={30} color="white" />
-          <Text style={{ color: "white" }}>Login</Text>
+          <Text style={{ color: "white",marginLeft:5}}>Login</Text>
         </TouchableOpacity>
       </View>
     </View>

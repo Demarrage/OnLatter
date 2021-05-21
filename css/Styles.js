@@ -7,8 +7,8 @@ export const styleFormat = StyleSheet.create({
     alignItems: "center",
   },
   logo: {
-    width: 100,
-    height: 100,
+    width: 400,
+    height: 250,
     marginRight: "auto",
     marginLeft: "auto",
     resizeMode: "contain",
@@ -49,4 +49,7 @@ export const styleFormat = StyleSheet.create({
     opacity: 0.2,
     borderRadius: 50,
   },
+  containerCadastro:{
+    marginTop:100,
+  }
 });
