@@ -1,13 +1,17 @@
-import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { Text, View, TouchableOpacity } from "react-native";
-import { Style } from "./css/Styles";
-import { AntDesign } from "@expo/vector-icons";
-import { NavigationContainer } from "@react-navigation/native";
+import { Text, View, Image, TouchableOpacity, Touchable } from "react-native";
+import { styleFormat } from "./css/Styles";
 import { createStackNavigator } from "@react-navigation/stack";
-import Login from "./screens/Login";
+import Home from "./screens/Home";
 import Cadastro from "./screens/Cadastro";
+import { NavigationContainer } from "@react-navigation/native";
+import { TextInput } from "react-native-gesture-handler";
+import { AntDesign } from "@expo/vector-icons";
+
 const pilha = createStackNavigator();
+let us = "";
+let sh = "";
+
 export default function App() {
   return (
     <NavigationContainer>
@@ -18,13 +22,13 @@ export default function App() {
           options={{ headerShown: false }}
         />
         <pilha.Screen
-          name="Login"
-          component={Login}
+          name="Cadastro"
+          component={Cadastro}
           options={{ headerTitleAlign: "center" }}
         />
         <pilha.Screen
-          name="Cadastro"
-          component={Cadastro}
+          name="Home"
+          component={Home}
           options={{ headerTitleAlign: "center" }}
         />
       </pilha.Navigator>
@@ -32,24 +36,47 @@ export default function App() {
   );
 }
 function TelaInicial({ navigation }) {
+  const [usuario, setUsuario] = React.useState("");
+  const [senha, setSenha] = React.useState("");
   return (
-    <View style={Style.container}>
-      <Image source={{}} style={Style.logo}/>
-      <View style={Style.btnApp}>
-        <TouchableOpacity
-        style={Style.btn}
-        onPress={()=>navigation.navigate("Login")}>
-          <AntDesign name="login" size={30} color="black"/>
-          <Text>Login</Text>
+    <View style={styleFormat.container}>
+      <Image source={{}} style={styleFormat.logo} />
+      <View style={styleFormat.cxinput}>
+        <TextInput
+          style={styleFormat.input}
+          placeholder="Nome Usuario"
+          placeholderTextColor="black"
+          textAlign="center"
+          value={usuario}
+          keyboardType="email-address"
+          onChangeText={() => setUsuario(value)}
+        />
+        <TextInput
+          style={styleFormat.input}
+          placeholder="Senha"
+          placeholderTextColor="black"
+          textAlign="center"
+          value={senha}
+          keyboardType="default"
+          secureTextEntry
+          onChangeText={(value) => setSenha(value)}
+        />
+        <View style={{ flexDirection: "row" }}>
+          <Text style={{ fontSize: 13, color: "silver" }}>
+            Se não possui cadastro clique em
+          </Text>
+          <TouchableOpacity>
+            <Text style={{ color: "white", marginLeft: 5 }}>Cadastrar</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-          style={Style.btn}
-          onPress={()=>navigation.navigate("Cadastro")}>
-            <AntDesign name="adduser" size={30} color="black"/>
-            <Text>Cadastro</Text>
-            </TouchableOpacity>
+        </View>
+        <TouchableOpacity
+          style={styleFormat.btnLogin}
+          onPress={() => navigation.navigate("Login")}
+        >
+          <AntDesign name="login" size={30} color="white" />
+          <Text style={{ color: "white" }}>Login</Text>
+        </TouchableOpacity>
       </View>
-      <StatusBar style="auto"/>
     </View>
-  )
+  );
 }
