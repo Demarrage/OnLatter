@@ -7,25 +7,27 @@ import Cadastrar from "./screens/Cadastrar";
 import { NavigationContainer } from "@react-navigation/native";
 import { TextInput } from "react-native-gesture-handler";
 import { AntDesign } from "@expo/vector-icons";
+import { ipserver } from "./config/settings";
 
 const pilha = createStackNavigator();
 let us = "";
 let sh = "";
-
+let em = "";
+let Logar = "";
 export default function App() {
   return (
-    <NavigationContainer>
+    <NavigationContainer independent={true}>
       <pilha.Navigator initialRoute="TelaInicial">
         <pilha.Screen
           name="TelaInicial"
           component={TelaInicial}
           options={{ headerShown: false }}
         />
-      <pilha.Screen
+        <pilha.Screen
           name="Cadastrar"
           component={Cadastrar}
-          options={{ headerTitleAlign: "center" }}
-        /> 
+          options={{ headerTitleAlign: "center", headerShown: false }}
+        />
         <pilha.Screen
           name="Home"
           component={Home}
@@ -40,7 +42,10 @@ function TelaInicial({ navigation }) {
   const [senha, setSenha] = React.useState("");
   return (
     <View style={styleFormat.container}>
-      <Image source={require("./assets/OnLatter.png")} style={styleFormat.logo} />
+      <Image
+        source={require("./assets/OnLatter.png")}
+        style={styleFormat.logo}
+      />
       <View style={styleFormat.cxinput}>
         <TextInput
           style={styleFormat.input}
@@ -49,7 +54,7 @@ function TelaInicial({ navigation }) {
           textAlign="center"
           value={usuario}
           keyboardType="email-address"
-          onChangeText={() => setUsuario(value)}
+          onChangeText={(value) => setUsuario(value)}
           color="black"
         />
         <TextInput
@@ -67,18 +72,45 @@ function TelaInicial({ navigation }) {
           <Text style={{ fontSize: 13, color: "silver" }}>
             Se não possui cadastro clique em
           </Text>
-          <TouchableOpacity onPress={()=>navigation.navigate("Cadastrar")}>
+          <TouchableOpacity onPress={() => navigation.navigate("Cadastrar")}>
             <Text style={{ color: "white", marginLeft: 5 }}>Cadastrar</Text>
           </TouchableOpacity>
         </View>
         <TouchableOpacity
           style={styleFormat.btnLogin}
-          onPress={() => navigation.navigate("Login")}
+          onPress={() => {
+            us = usuario;
+            em = usuario;
+            sh = senha;
+            Logar();
+            //  navigation.navigate("Home")
+          }}
         >
           <AntDesign name="login" size={30} color="white" />
-          <Text style={{ color: "white",marginLeft:5}}>Login</Text>
+          <Text style={{ color: "white", marginLeft: 5 }}>Login</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
+}
+function Logar() {
+  fetch(`${ipserver}/usuario/login`, {
+    method: "POST",
+    headers: {
+      accept: "application/json",
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      nomeusuario: us,
+      senha: sh,
+      email: em
+    })
+  })
+    .then((response) => response.json())
+    .then((rs) => console.log(rs))
+    .catch((error) => console.error(`Erro ao dançar macarena ${error}`));
+}
+function Logar(){
+  if (Logar).then("Home");
+  else alert("Usuario ou senha incorretos");
 }
