@@ -82,7 +82,10 @@ function TelaInicial({ navigation }) {
             us = usuario;
             em = usuario;
             sh = senha;
-            Logar();
+            if(EfetuarLogin){
+              navigation.navigate("Home")
+              .else("Login ou senha incorreta")
+            }
             //  navigation.navigate("Home")
           }}
         >
@@ -93,7 +96,7 @@ function TelaInicial({ navigation }) {
     </View>
   );
 }
-function Logar() {
+function EfetuarLogin() {
   fetch(`${ipserver}/usuario/login`, {
     method: "POST",
     headers: {
@@ -109,8 +112,4 @@ function Logar() {
     .then((response) => response.json())
     .then((rs) => console.log(rs))
     .catch((error) => console.error(`Erro ao dançar macarena ${error}`));
-}
-function Logar(){
-  if (Logar).then("Home");
-  else alert("Usuario ou senha incorretos");
 }

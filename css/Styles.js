@@ -51,5 +51,14 @@ export const styleFormat = StyleSheet.create({
   },
   containerCadastro:{
     marginTop:100,
+  },
+  home:{
+    flex: 1,
+    backgroundColor: "#2b3347",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  card:{
+    backgroundColor:"red"
   }
 });
